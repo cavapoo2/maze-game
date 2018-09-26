@@ -1,0 +1,17 @@
+ table {
+
+        padding-left: 4em;
+    }
+ td {
+        /*
+         text-align: center;
+        vertical-align: middle;*/
+       border: 1px solid #000000;
+    }
+ input {
+        color: #000000;
+        text-align:center;
+        width:18px;
+        height:18px;
+        font-size:14px;
+    }
