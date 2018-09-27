@@ -37,6 +37,19 @@ class App extends Component {
   }
   handleReset() {
     console.log("Rest Clicked");
+    let n = Object.assign({},this.state);
+    let r = [0,0,0,0,0,0,0,0];
+    this.setState({
+      maze:[
+        r,r,r,r,r,r,r,r
+      ],
+    });
+    /*
+    for(let i=0; i < this.state.maze.length; i++) {
+      for(let j =0; j < this.state[0].length;j++) {
+        n.maze[i][j]=0
+      }
+    }*/
   }
 
   render() {
@@ -47,7 +60,7 @@ class App extends Component {
           <Grid data={this.state.maze} func={this.handleChange} />
           <div>
             <Paragraph text="Create a start S and end E on the grid. Also add X to show that a path can not be taken" />
-            <div>
+            <div> 
               <Button text="Run" handler={this.handleClick} />
               <Button text="Clear" handler={this.handleReset} />
             </div>
