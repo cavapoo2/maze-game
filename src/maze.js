@@ -1,21 +1,41 @@
-class Coord {
+export class Coord {
     constructor(i,j) {
         this.i = i;
         this.j=j;
 
     }
     equal(coord) {
-        return this.i === coord.i && this.j === coord.j;
+        console.log('coord=',coord);
+        console.log('this=',this.i,this.j);
+
+          if(this.i === coord.i && this.j === coord.j){
+                return true;
+          }else {
+              return false;
+          }
+        
     }
 };
 
 function is_possible(coord, maze) {
-    return coord.i >= 0 && coord.j >= 0 && coord.i < maze.length() && coord.j < maze.length && 
-    maze[coord.i][coord.j] === 0;
+    if(coord.i >= 0 && coord.j >= 0 && coord.i < maze.length && coord.j < maze.length && 
+    (maze[coord.i][coord.j] === 0 || maze[coord.i][coord.j] === 'E')) {
+        return true;
+    }else {
+        console.log('Not poss');
+        return false;
+    }
 }
 
 function maze_helper(maze, cur, end, path) {
-    if(cur.equal(end)) return true;
+    if(cur.equal(end)) {
+        console.log('DONE');
+     return true;
+    }
+   // console.log('Cur=',cur);
+   // console.log('End=',end);
+   // console.log('Path=',path);
+
     
     let dirs = [
         [0,1],
@@ -23,8 +43,11 @@ function maze_helper(maze, cur, end, path) {
         [1,0],
         [-1,0]
     ];
-    for(let d in dirs) {
-        let next = Coord(cur.i + d[0],cur.y + d[1]);
+    for(let i=0; i < dirs.length; i++) {
+    //    console.log('d=',dirs[i]);
+        let next = new Coord(cur.i + dirs[i][0],cur.j + dirs[i][1]);
+      //  console.log('Next=',next);
+
         if(is_possible(next,maze)) {
             maze[next.i][next.j] = 1;
             path.push(next);
