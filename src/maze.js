@@ -5,9 +5,6 @@ export class Coord {
 
     }
     equal(coord) {
-        console.log('coord=',coord);
-        console.log('this=',this.i,this.j);
-
           if(this.i === coord.i && this.j === coord.j){
                 return true;
           }else {
@@ -22,19 +19,15 @@ function is_possible(coord, maze) {
     (maze[coord.i][coord.j] === 0 || maze[coord.i][coord.j] === 'E')) {
         return true;
     }else {
-        console.log('Not poss');
+        //console.log('Not poss');
         return false;
     }
 }
 
 function maze_helper(maze, cur, end, path) {
     if(cur.equal(end)) {
-        console.log('DONE');
      return true;
     }
-   // console.log('Cur=',cur);
-   // console.log('End=',end);
-   // console.log('Path=',path);
 
     
     let dirs = [
@@ -44,17 +37,15 @@ function maze_helper(maze, cur, end, path) {
         [-1,0]
     ];
     for(let i=0; i < dirs.length; i++) {
-    //    console.log('d=',dirs[i]);
         let next = new Coord(cur.i + dirs[i][0],cur.j + dirs[i][1]);
-      //  console.log('Next=',next);
 
-        if(is_possible(next,maze)) {
+        if(is_possible(next,maze) === true) {
             maze[next.i][next.j] = 1;
             path.push(next);
             if(maze_helper(maze,next,end,path)) {
                 return true;
             }
-            path.slice(0,path.length-1);
+            path = path.slice(0,path.length-1);
         }
     }
     return false;
@@ -62,10 +53,12 @@ function maze_helper(maze, cur, end, path) {
 
 export function search_maze(maze,start,end) {
     let path=[];
+    let res=true;
     maze[start.i][start.j] = 1;
     path.push(start);
     if(maze_helper(maze,start,end,path) === false) {
-        path.slice(0,path.length-1);
+        path = path.slice(0,path.length-1);
+        res=false;
     }
-    return path;
+    return {p:path,r:res};
 }

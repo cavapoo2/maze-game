@@ -32,12 +32,10 @@ class App extends Component {
   handleChange(row, col, { target }) {
     let n = Object.assign({}, this.state);
     if (target.value === 'S' || target.value === 's') {
-      console.log('S=', row, col);
       n.start = [row, col];
       n.maze[row][col] = 'S';
     }
     else if (target.value === 'e' || target.value === 'E') {
-      console.log('E=', row, col);
       n.end = [row, col];
       n.maze[row][col] = 'E';
     }
@@ -49,21 +47,21 @@ class App extends Component {
 
   }
   handleRun({ target }) {
-    console.log('Button Clicked');
     let start = new Coord(this.state.start[0], this.state.start[1]);
     let end = new Coord(this.state.end[0], this.state.end[1]);
-    let p = search_maze(this.state.maze, start, end);
-    if (p.length > 0) {
+    let res = search_maze(this.state.maze, start, end);
+    //console.log(res.p,res.r);
+    if (res.r === true) {
       let n = Object.assign({}, this.state);
-      for (let i = 0; i < p.length ; i++) {
+      for (let i = 0; i < res.p.length ; i++) {
         if (i === 0) {
 
-          n.maze[p[i].i][p[i].j] = 'S';
-        } else if (i === p.length - 1) {
+          n.maze[res.p[i].i][res.p[i].j] = 'S';
+        } else if (i === res.p.length - 1) {
 
-          n.maze[p[i].i][p[i].j] = 'E';
+          n.maze[res.p[i].i][res.p[i].j] = 'E';
         } else {
-          n.maze[p[i].i][p[i].j] = 'P';
+          n.maze[res.p[i].i][res.p[i].j] = 'P';
         }
       }
       this.setState(n);
@@ -71,7 +69,6 @@ class App extends Component {
     }
 
     //show the path
-    console.log('res=', p);
 
   }
   handleReset() {
@@ -85,16 +82,6 @@ class App extends Component {
     n.end = 0;
     n.start = 0;
     this.setState(n);
-    /*
-    let r = [0, 0, 0, 0, 0, 0, 0, 0];
-    this.setState({
-      start:0,
-      end:0,
-      maze: [
-        r, r, r, r, r, r, r, r
-      ],
-    });
-    */
   }
 
   render() {
