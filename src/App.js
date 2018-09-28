@@ -3,7 +3,8 @@ import Grid from './grid';
 import Header2 from './header';
 import Paragraph from './paragraph';
 import Button from './button';
-//import './Button.css';
+import TableResult from './tableResult'
+import HeaderOnOff from './headerOnOff';
 import './App.css';
 import { Coord, search_maze } from './maze';
 
@@ -23,10 +24,12 @@ class App extends Component {
       ],
       start: [0, 0],
       end: [7, 7],
+      ready: false,
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleRun = this.handleRun.bind(this);
     this.handleReset = this.handleReset.bind(this);
+//    this.handleDebug = this.handleDebug.bind(this);
 
   }
   handleChange(row, col, { target }) {
@@ -38,6 +41,9 @@ class App extends Component {
     else if (target.value === 'e' || target.value === 'E') {
       n.end = [row, col];
       n.maze[row][col] = 'E';
+    }
+    else if (target.value === 'x' || target.value === 'X') {
+      n.maze[row][col] = 'X';
     }
     else {
       n.maze[row][col] = target.value;
@@ -53,7 +59,7 @@ class App extends Component {
     //console.log(res.p,res.r);
     if (res.r === true) {
       let n = Object.assign({}, this.state);
-      for (let i = 0; i < res.p.length ; i++) {
+      for (let i = 0; i < res.p.length; i++) {
         if (i === 0) {
 
           n.maze[res.p[i].i][res.p[i].j] = 'S';
@@ -64,11 +70,10 @@ class App extends Component {
           n.maze[res.p[i].i][res.p[i].j] = 'P';
         }
       }
+      n.ready = true;
       this.setState(n);
 
     }
-
-    //show the path
 
   }
   handleReset() {
@@ -81,8 +86,13 @@ class App extends Component {
     console.log("Rest Clicked");
     n.end = 0;
     n.start = 0;
+    n.ready = false;
     this.setState(n);
   }
+  /*
+  handleDebug() {
+    console.log('state=', this.state);
+  }*/
 
   render() {
     return (
@@ -91,13 +101,25 @@ class App extends Component {
         <div className="Layout1">
           <Grid data={this.state.maze} func={this.handleChange} />
           <div>
-            <Paragraph text="Create a start S and end E on the grid. Also add X to show that a path can not be taken" />
+            <Paragraph name="introPara" text="Create a start S and end E on the grid. Also add X to show that a path can not be taken" />
             <div>
               <Button text="Run" handler={this.handleRun} />
               <Button text="Clear" handler={this.handleReset} />
             </div>
           </div>
         </div>
+        <div>
+          <HeaderOnOff text="Results" ready={this.state.ready} />
+          <div className="Layout2">
+            <TableResult data={this.state.maze} ready={this.state.ready} />
+            <div>
+            {this.state.ready ? <Paragraph name="resPara" text="Showing path taken" /> : <div></div>}
+            </div>
+          </div>
+        </div>
+        {/*
+        <Button text="Debug" handler={this.handleDebug} />
+        */}
       </div>
     );
   }

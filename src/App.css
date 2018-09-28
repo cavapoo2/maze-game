@@ -30,6 +30,9 @@
 .Layout1 {
   display: flex;
 }
+.Layout2 {
+  display:flex;
+}
 .TxArea {
   background-color:black;
     color: green;

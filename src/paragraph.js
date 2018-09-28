@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './Paragraph.css';
-const Paragraph = ({text}) => {
+const Paragraph = ({text,name}) => {
     return(
-    <p>{text}</p>
+    <p className={name}>{text}</p>
     );
 }
 

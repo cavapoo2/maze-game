@@ -1,0 +1,20 @@
+.TableResP {
+    background: #ABC;
+}
+.TableResS {
+    background: yellow;
+}
+.TableResE {
+    background:greenyellow;
+}
+.TableResX {
+    background:red;
+}
+
+
+.ResTableMain {
+ /*   margin-left: 4em;*/
+    table-layout: fixed;
+
+    width:290px;
+}

@@ -1,4 +1,10 @@
-p {
+
+.introPara {
     margin-left: 2em;
+    width:300px;
+}
+
+.resPara{
+    margin-left: 7em;
     width:200px;
 }
